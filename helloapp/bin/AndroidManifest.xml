@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.helloapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ReserveTable"
+            android:label="@string/title_activity_other" >
+        </activity>
+        <activity
+            android:name=".OtherMainActivity"
+            android:label="@string/title_activity_other_main" >
+        </activity>
+        <activity
+            android:name=".DformActivity"
+            android:label="@string/title_activity_rform" >
+        </activity>
+        <activity
+            android:name=".Reserveform"
+            android:label="@string/title_activity_reserveform" >
+        </activity>
+        <activity
+            android:name=".ReserveComplete"
+            android:label="@string/title_activity_reserve_complete" >
+        </activity>
+        <activity
+            android:name=".Confirm"
+            android:label="@string/title_activity_confirm" >
+        </activity>
+        <activity
+            android:name=".Confirm2"
+            android:label="@string/title_activity_confirm2" >
+        </activity>
+        <activity
+            android:name=".DeleteComplete"
+            android:label="@string/title_activity_delete_complete" >
+        </activity>
+        <activity
+            android:name=".AdministerTable"
+            android:label="@string/title_activity_administer_table" >
+        </activity>
+    </application>
+
+</manifest>
