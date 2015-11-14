@@ -8,13 +8,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.helloapp.AdministerTable" >
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scrollView1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:text="席: 橙=予約済、赤=使用中"
+        android:textSize="20sp" />
+
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="350dp"
         android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp" >
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true" >
 
         <TableLayout
             android:layout_width="230dp"
@@ -477,8 +486,9 @@
         android:id="@+id/tableRow16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scrollView1"
-        android:layout_alignParentBottom="true" >
+        android:layout_below="@+id/scrollView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp" >
 
         <Button
             android:id="@+id/button41"
@@ -500,18 +510,15 @@
             android:layout_height="wrap_content"
             android:onClick="Update"
             android:text="更新" />
-
     </TableRow>
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/button44"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scrollView1"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="30dp"
-        android:text="席: 橙=予約済、赤=使用中"
-        android:textSize="20sp" />
+        android:layout_alignLeft="@+id/tableRow16"
+        android:layout_below="@+id/tableRow16"
+        android:onClick="ReturnToHome"
+        android:text="ホームに戻る" />
 
 </RelativeLayout>

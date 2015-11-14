@@ -80,25 +80,25 @@ public class DformActivity extends ActionBarActivity {
 	        return;
 	    }
 	    //読み込み
-		FileInputStream fis = this.openFileInput("Ndatafile.txt");
-	    BufferedReader Nreader = new BufferedReader(new InputStreamReader(fis));
 	    FileInputStream fis2 = this.openFileInput("Rdatafile.txt");
 	    BufferedReader Rreader = new BufferedReader(new InputStreamReader(fis2));
+		FileInputStream fis = this.openFileInput("Ndatafile.txt");
+	    BufferedReader Nreader = new BufferedReader(new InputStreamReader(fis));
  			
  		while((linedata = Rreader.readLine()) != null) {
  			data1[dcnt++]=linedata;
  			System.out.println(linedata);
  		}
  		Rreader.close();
- 		
-    	//名前が同じでも、予約番号が違う場合はエラーを起こすようにする
+
  		FileOutputStream fis3= this.openFileOutput("Rdatafile.txt", 0);
     	BufferedWriter Rwriter = new BufferedWriter(new OutputStreamWriter(fis3));
+    	//名前が同じでも、予約番号が違う場合はエラーを起こすようにする
  		for(int i=0;i<dcnt;i++){
  			if(data1[i].indexOf("person") != -1 && Integer.parseInt(data1[i+1])==rnum && data1[i+2].indexOf(rnametext) != -1){
  				i+=3;
  				flag = 1;
-     			while(data1[i].indexOf("person") == -1){
+     			while(data1[i].indexOf("person") == -1 && data1[i].indexOf("using") == -1){
      				if(i<dcnt-1){
      					i++;
      				}
@@ -106,10 +106,9 @@ public class DformActivity extends ActionBarActivity {
      					break;
      				}
      			}
-     			
      			if(i<dcnt-1){
      				Rwriter.write(data1[i]+"\r\n");
-     			}
+ 				}
  			}
  			
  			else{
@@ -136,13 +135,13 @@ public class DformActivity extends ActionBarActivity {
 
      	Nreader.close();
      	
-     	
+
      	FileOutputStream fis4= this.openFileOutput("Ndatafile.txt", 0);
     	BufferedWriter Nwriter = new BufferedWriter(new OutputStreamWriter(fis4));
  		for(int i=0;i<dcnt;i++){
  			if(data2[i].indexOf("person") != -1 && Integer.parseInt(data2[i+1])==rnum){
  				i+=2;
-     			while(data2[i].indexOf("person") == -1){
+     			while(data2[i].indexOf("person") == -1&&data2[i].indexOf("using") == -1){
      				if(i<dcnt-1){
      					i++;
      				}

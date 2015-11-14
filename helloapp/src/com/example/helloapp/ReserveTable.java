@@ -57,23 +57,30 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 		
 		try {
 			FileInputStream fis = this.openFileInput("Ndatafile.txt");
-	        BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-	        String line=null;
-	        while((line=in.readLine())!=null){
-	        	if(line.indexOf("person") != -1||line.indexOf("using") != -1){
-	        		in.readLine();
-	        		line=in.readLine();
-	        		num=Integer.parseInt(line);
-	        		bu[num].setBackgroundColor(Color.RED);
-	        		redflag[num]=1;
-	        	}
-	        	else{
-	        		num=Integer.parseInt(line);
-	        		bu[num].setBackgroundColor(Color.RED);
-	        		redflag[num]=1;
-	        	}
-	        }
-	        in.close();
+	    	BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+	    	String line=in.readLine();
+			while(line!=null){
+			    if(line.indexOf("person") != -1 ||line.indexOf("using") != -1){
+			    	in.readLine();
+			    	line=in.readLine();
+			    	if(line == null){
+			    		break;
+			    	}
+			    	if(line.indexOf("person") == -1 && line.indexOf("using") == -1){
+			    		num=Integer.parseInt(line);
+			    		redflag[num]=1;
+			    		bu[num].setBackgroundColor(Color.RED);
+			    	}
+			    }
+			    
+			    else{
+			    	num=Integer.parseInt(line);
+			    	redflag[num]=1;
+			    	bu[num].setBackgroundColor(Color.RED);
+				    line=in.readLine();
+			    }
+			}
+		    in.close();
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
