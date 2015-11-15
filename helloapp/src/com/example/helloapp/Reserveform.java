@@ -106,7 +106,7 @@ public class Reserveform extends ActionBarActivity {
 	
 	public void doAction(View v) throws IOException{
     	int num = 0;
-    	name=editfilledcheck(R.id.editText1);
+    	name=editfilledcheck(R.id.rnumedit);
     	number=editfilledcheck(R.id.editText2);
     	address=editfilledcheck(R.id.editText3);
     	

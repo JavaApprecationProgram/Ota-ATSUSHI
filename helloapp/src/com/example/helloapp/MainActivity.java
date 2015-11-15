@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	}
 	
 	public void Administer_side(View v){
-		Intent intent = new Intent(this,AdministerTable.class);
+		Intent intent = new Intent(this,Administerhome.class);
 		this.startActivity(intent);
 	}
 	

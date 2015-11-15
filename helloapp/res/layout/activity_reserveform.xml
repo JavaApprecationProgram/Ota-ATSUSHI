@@ -81,7 +81,7 @@
             android:text="電話番号" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/rnumedit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_column="2"

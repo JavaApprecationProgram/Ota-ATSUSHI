@@ -69,7 +69,7 @@ public class DformActivity extends ActionBarActivity {
  		String data2[] = new String[100];
  		int dcnt = 0,flag=0,rnum;
  		
-	    String number = editfilledcheck(R.id.editText1);
+	    String number = editfilledcheck(R.id.rnumedit);
 	    String rnametext = editfilledcheck(R.id.editText2);
 	    if(number==null||rnametext==null){
 	        return;

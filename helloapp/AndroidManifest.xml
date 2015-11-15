@@ -58,6 +58,18 @@
             android:name=".AdministerTable"
             android:label="@string/title_activity_administer_table" >
         </activity>
+        <activity
+            android:name=".Administerhome"
+            android:label="@string/title_activity_administerhome" >
+        </activity>
+        <activity
+            android:name=".Administertable"
+            android:label="@string/title_activity_administertable" >
+        </activity>
+        <activity
+            android:name=".Administerlist"
+            android:label="@string/title_activity_administerlist" >
+        </activity>
     </application>
 
 </manifest>

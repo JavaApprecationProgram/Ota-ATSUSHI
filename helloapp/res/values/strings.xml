@@ -17,5 +17,8 @@
     <string name="title_activity_confirm2">Confirm2</string>
     <string name="title_activity_delete_complete">DeleteComplete</string>
     <string name="title_activity_administer_table">AdministerTable</string>
+    <string name="title_activity_administerhome">Administerhome</string>
+    <string name="title_activity_administertable">Administertable</string>
+    <string name="title_activity_administerlist">Administerlist</string>
 
 </resources>
