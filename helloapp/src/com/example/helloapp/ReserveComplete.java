@@ -1,3 +1,7 @@
+//予約が完了したときに出力される画面
+/*
+ * Reserveform.javaから、予約番号+edittextに入力された名前・人数・電話番号をtextview1を出力する
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;

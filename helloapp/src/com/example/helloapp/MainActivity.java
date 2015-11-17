@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 @SuppressLint("NewApi")
 public class MainActivity extends ActionBarActivity implements OnClickListener {
@@ -17,6 +18,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		RelativeLayout layout = (RelativeLayout) findViewById(R.id.Relativelayout);
+		layout.setBackgroundResource(R.drawable.wall);
 		Button button1=(Button)findViewById(R.id.button01);
 		Button button2=(Button)findViewById(R.id.button02);
 		/**ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚çonClick‚ª“®ì‚·‚é‚æ‚¤İ’è**/

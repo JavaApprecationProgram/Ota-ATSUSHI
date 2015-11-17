@@ -1,3 +1,14 @@
+//Ndatafile.txtから予約番号・使用中番号を読み込み、予約済の番号（"person"以下にある番号）・
+//使用中の番号（"using"以下にある番号）に対応する座席を赤色にする
+/*赤色の座席は選択可
+ * 
+ * 選択した座席は黄色になる(複数選択可)
+ * 
+ * 「使用する」ボタンを押すと、"using"+黄色になった座席の番号をString型にして、
+ * Reserveform.javaへintentして、intent先に文字列された、選択した座席番号の文字列を渡す
+ * (例: 2・11・15番の座席を選択して「使用する」ボタンを押した場合・・・文字列2|11|15|を渡す)
+ * 
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
@@ -52,6 +63,12 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 		for(int i=1;i<bid.length;i++){
 			redflag[i]=0;
 			bu[i]=(Button)findViewById(bid[i]);
+			if(1<=i%8 && i%8<=4){
+				bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.chair));
+			}
+			else{
+				bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.chair_rev));
+			}
 			bu[i].setOnClickListener(this);
 		}
 		
@@ -76,7 +93,12 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 			    else{
 			    	num=Integer.parseInt(line);
 			    	redflag[num]=1;
-			    	bu[num].setBackgroundColor(Color.RED);
+			    	if(1<=num%8 && num%8<=4){
+						bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.redchair));
+					}
+					else{
+						bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.redchair_rev));
+					}
 				    line=in.readLine();
 			    }
 			}
@@ -111,7 +133,12 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 		int ID = v.getId();
 	    for(int i=1;i<bid.length;i++){
 	    	if(ID == bid[i] && redflag[i]==0){
-	    		bu[i].setBackgroundColor(Color.YELLOW);
+	    		if(1<=i%8 && i%8<=4){
+					bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.yellowchair));
+				}
+				else{
+					bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.yellowchair_rev));
+				}
  				checked[cnt++]=i;
  				break;
 	    	}

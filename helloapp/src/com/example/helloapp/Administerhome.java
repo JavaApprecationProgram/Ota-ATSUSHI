@@ -1,12 +1,16 @@
+//管理者側のホーム（リスト画面・テーブル画面に移るボタンがある）
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
+@SuppressLint("NewApi")
 public class Administerhome extends ActionBarActivity {
 
 	@Override

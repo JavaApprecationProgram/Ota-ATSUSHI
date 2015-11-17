@@ -1,16 +1,20 @@
+//Rdatafile.txtから予約情報を読み込み、各予約者の予約番号・お名前・人数をリスト形式で表示する
+/*
+ * テキストエディタ「rnumedit」に予約番号を入力する
+ * 「予約者使用」ボタンを押すとrnameditで入力した番号に対応する予約番号（①）の予約者を"using（使用中）"にする
+ * （Rdatafile.txt・Ndatafile.txtにある①に対応する予約者情報の"person"を"using"に変える）
+ * onStart()が実行され、Rdatafile.txtから予約情報を再読み込みし、各予約者の予約番号・お名前・人数をリスト形式で表示する
+ * 
+ * 「更新」ボタンを押すとonStart()が実行される
+ * 
+ * 
+ */
+
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
+import java.io.*;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,15 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class Administerlist extends ActionBarActivity {
-	String[] rnum = new String[1000];
-	String[] name = new String[1000];
-	String[] pnum = new String[1000];
-	int rcnt,ncnt,pcnt;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,95 +85,66 @@ public class Administerlist extends ActionBarActivity {
 		}
 	}
 	
+	int fileupdate(String path,int rn,int Rdataflag) throws IOException{
+		String linedata;
+		String[] data = new String[1000];
+ 		int dcnt = 0,flag=0;
+	    FileInputStream fis = this.openFileInput(path);
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+ 		while((linedata = reader.readLine()) != null) {
+ 			data[dcnt++]=linedata;
+ 			System.out.println(linedata);
+ 		}
+ 		reader.close();
+
+ 		FileOutputStream fis2= this.openFileOutput(path, 0);
+    	BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fis2));
+ 		for(int i=0;i<dcnt;i++){
+ 			if(data[i].indexOf("person") != -1){
+     			if(Integer.parseInt(data[i+1])==rn){
+     				if(i<dcnt-1){
+     					if(Rdataflag==1){
+     						i+=4;
+     					}
+     					else{
+     						writer.write("using\r\n"+-1+"\r\n");
+     						i++;
+     					}
+ 						flag=1;
+     				}
+     				else{
+     					writer.write(data[i]+"\r\n");
+     				}
+     			}
+
+ 				else{
+ 					writer.write(data[i]+"\r\n");
+ 				}
+ 			}
+ 			
+ 			else{
+ 				writer.write(data[i]+"\r\n");
+ 			}
+ 		}
+ 		writer.close();
+ 		
+		return flag;
+	}
+	
 	
 	public void UseTable(View v) throws IOException{
-		int rnum;
-		if((rnum=filedcheck())!=-1){
-
-		    String linedata;
-	 		String data1[] = new String[100];
-	 		String data2[] = new String[100];
-	 		int dcnt = 0,flag=0;
-		    FileInputStream fis2 = this.openFileInput("Rdatafile.txt");
-		    BufferedReader Rreader = new BufferedReader(new InputStreamReader(fis2));
-			FileInputStream fis = this.openFileInput("Ndatafile.txt");
-		    BufferedReader Nreader = new BufferedReader(new InputStreamReader(fis));
-	 			
-	 		while((linedata = Rreader.readLine()) != null) {
-	 			data1[dcnt++]=linedata;
-	 			System.out.println(linedata);
-	 		}
-	 		Rreader.close();
-
-	 		FileOutputStream fis3= this.openFileOutput("Rdatafile.txt", 0);
-	    	BufferedWriter Rwriter = new BufferedWriter(new OutputStreamWriter(fis3));
-	 		for(int i=0;i<dcnt;i++){
-	 			if(data1[i].indexOf("person") != -1){
-	     			if(Integer.parseInt(data1[i+1])==rnum){
-	     				if(i<dcnt-1){
-	     					Rwriter.write("using\r\n"+-1+"\r\n");
-	     					i++;
-	     					flag=1;
-	     				}
-	     				else{
-	     					Rwriter.write(data1[i]+"\r\n");
-	     				}
-	     			}
-
-     				else{
-     					Rwriter.write(data1[i]+"\r\n");
-     				}
-	 			}
-	 			
-	 			else{
-	 				Rwriter.write(data1[i]+"\r\n");
-	 			}
-	 		}
-	 		
-	 		if(flag==0){
-	 			TextView text = (TextView)this.findViewById(R.id.textView5);
-				text.setText("入力された予約情報は。予約リストに存在しません");
+		int num;
+		if((num=filedcheck())!=-1){
+			if(fileupdate("Rdatafile.txt",num,1)==0){
+				TextView text = (TextView)this.findViewById(R.id.textView5);
+				text.setText("入力された予約情報は、予約リストに存在しません");
 				text.setTextColor(android.graphics.Color.RED);
-				Rwriter.close();
 				return;
-	 		}
-	 		
-	 		Rwriter.close();
-	 		
-	 		
-	 		dcnt=0;
-	 		while((linedata = Nreader.readLine()) != null) {
-	 			data2[dcnt++]=linedata;
-	 			System.out.println(linedata);
-	 		}
+			}
+			fileupdate("Ndatafile.txt",num,0);
 
-	     	Nreader.close();
-	     	
-
-	     	FileOutputStream fis4= this.openFileOutput("Ndatafile.txt", 0);
-	    	BufferedWriter Nwriter = new BufferedWriter(new OutputStreamWriter(fis4));
-	 		for(int i=0;i<dcnt;i++){
-	 			if(data2[i].indexOf("person") != -1){
-	     			if(Integer.parseInt(data2[i+1])==rnum){
-	     				if(i<dcnt-1){
-	     					Nwriter.write("using\r\n"+-1+"\r\n");
-	     					i++;
-	     				}
-	     				else{
-	     					Nwriter.write(data2[i]+"\r\n");
-	     				}
-	     			}
-
-     				else{
-     					Nwriter.write(data2[i]+"\r\n");
-     				}
-	 			}
-	 			
-	 			else{
-	 				Nwriter.write(data2[i]+"\r\n");
-	 			}
-	 		}
-	     	Nwriter.close();
+		    
+	 		
 	     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    	builder.setTitle("指定した予約番号にある座席を、使用状態にしました");
 	    	builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -185,9 +156,8 @@ public class Administerlist extends ActionBarActivity {
 			});
 	    	builder.show();
 		}
-		else{
-			return;
-		}
+		
+		return;
 	}
 	
 	

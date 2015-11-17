@@ -1,3 +1,11 @@
+//予約情報を入力する画面
+/*edittextに名前・人数・電話番号を入力する
+ * 
+ * 「決定する」ボタンを押すと、Reservenum.txtから予約番号を呼び出し、インクリメントした予約番号（①）をReservenum.txtに書き込む。
+ * 次に、①+入力された名前・人数・電話番号をRdatafile.txtに書き込み、①+指定した座席番号をRdatafile.txtに書き込む。
+ * その後、ReserveComplete.javaへintentして、intent先に①+入力された名前・人数・電話番号の文字列を渡す
+ * 
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;

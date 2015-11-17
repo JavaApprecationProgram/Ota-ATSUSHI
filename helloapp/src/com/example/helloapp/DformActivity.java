@@ -1,3 +1,9 @@
+//予約情報を取り消す画面
+/*edittextに予約番号・名前を入力する
+ * 
+ * 「決定する」ボタンを押すと、入力された予約番号・名前が一致するRdatafile.txt内の予約情報を取り消し、予約番号が一致するNdatafile.txt内の予約情報を取り消す
+ * 
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;

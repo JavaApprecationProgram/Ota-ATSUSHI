@@ -1,16 +1,19 @@
+//Ndatafile.txtから予約番号・使用中番号を読み込み、予約済の番号（"person"以下にある番号）に対応する座席を橙色に、
+//使用中の番号（"using"以下にある番号）に対応する座席を赤色にする
+/*
+ * 橙色の座席は選択不可・赤色の座席は選択可
+ * 
+ * 選択した座席は黄色になる(複数選択可)
+ * 
+ * 「使用する」ボタンを押すと、"using"+黄色になった座席の番号をNdatafile.txtに書き込む
+ * 
+ * 「空きにする」ボタンを押すと、選択した赤色の座席の番号を、Rdatafile.txtから削除する（using+-1の二行しかない箇所は、Rdatafile.txtから削除する）
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
+import java.io.*;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class AdministerTable extends ActionBarActivity implements OnClickListener{
@@ -44,17 +48,59 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		
 	}
 	
+	void changecolor(String line,String color){
+    	if(line.indexOf("person") == -1 && line.indexOf("using") == -1){
+    		num=Integer.parseInt(line);
+    		if(color=="orange"){
+    			orangeflag[num]=1;
+    			colorturn=1;
+    		}
+    		else if(color == "red"){
+    			redflag[num]=1;
+    			colorturn=2;
+    		}
+    	}
+		return;
+	}
+	
+	void colorpaint(int n){
+    	if(colorturn==1){
+    		orangeflag[num]=1;
+    		if(1<=num%8 && num%8<=4){
+				bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.orengechair));
+			}
+			else{
+				bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.orengechair_rev));
+			}
+    	}
+    	else if(colorturn==2){
+    		redflag[num]=1;
+    		if(1<=num%8 && num%8<=4){
+				bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.redchair));
+			}
+			else{
+				bu[num].setBackgroundDrawable(getResources().getDrawable(R.drawable.redchair_rev));
+			}
+    	}
+	}
+	
 	public void onStart(){
+		super.onStart();
 		for(int i=0;i<cnt;i++){
 			checked[i]=-1;
 		}
 		cnt=0;
 		colorturn=0;
-		super.onStart();
 		for(int i=1;i<bid.length;i++){
 			orangeflag[i]=0;
 			redflag[i]=0;
 			bu[i]=(Button)findViewById(bid[i]);
+			if(1<=i%8 && i%8<=4){
+				bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.chair));
+			}
+			else{
+				bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.chair_rev));
+			}
 			bu[i].setOnClickListener(this);
 		}
 
@@ -69,11 +115,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 			    	if(line == null){
 			    		break;
 			    	}
-			    	if(line.indexOf("person") == -1 && line.indexOf("using") == -1){
-			    		num=Integer.parseInt(line);
-			    		colorturn=1;
-			    		orangeflag[num]=1;
-			    	}
+			    	changecolor(line,"orange");
 			    }
 			    
 			    else if(line.indexOf("using") != -1){
@@ -82,23 +124,12 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 			    	if(line == null){
 			    		break;
 			    	}
-			    	if(line.indexOf("person") == -1 && line.indexOf("using") == -1){
-			    		num=Integer.parseInt(line);
-			    		colorturn=2;
-			    		redflag[num]=1;
-			    	}
+			    	changecolor(line,"red");
 			   	}
 			    
 			    else{
 			    	num=Integer.parseInt(line);
-			    	if(colorturn==1){
-			    		orangeflag[num]=1;
-			    		bu[num].setBackgroundColor(Color.rgb(255, 192, 0));
-			    	}
-			    	else if(colorturn==2){
-			    		redflag[num]=1;
-			    		bu[num].setBackgroundColor(Color.RED);
-			    	}
+			    	colorpaint(num);
 				    line=in.readLine();
 			    }
 			}
@@ -113,7 +144,20 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 	}
 	
 	
+	int selectedcheck(){
+		if(cnt==0){
+			TextView text = (TextView)this.findViewById(R.id.textView2);
+			text.setText("座席を指定してください");
+			text.setTextColor(android.graphics.Color.RED);
+			return -1;
+		}
+		return 0;
+	}
+	
 	public void Use(View v) throws IOException{
+		if(selectedcheck()==-1){
+			return;
+		}
 		FileOutputStream fis2= this.openFileOutput("Ndatafile.txt", Context.MODE_APPEND);
     	BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fis2));
     	out2.write("using\r\n"+-1+"\r\n");
@@ -134,6 +178,9 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 	}
 	
 	public void Free(View v) throws IOException{
+		if(selectedcheck()==-1){
+			return;
+		}
 		FileInputStream fis = this.openFileInput("Ndatafile.txt");
 	    BufferedReader Nreader = new BufferedReader(new InputStreamReader(fis));
      	
@@ -179,6 +226,8 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
  		
  		
      	Nwriter.close();
+     	TextView text = (TextView)this.findViewById(R.id.textView2);
+		text.setText("");
      	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setTitle("空座席を確保しました");
     	builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -199,7 +248,12 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		int ID = v.getId();
 	    for(int i=1;i<bid.length;i++){
 	    	if(ID == bid[i] && orangeflag[i]==0){
-	    		bu[i].setBackgroundColor(Color.YELLOW);
+	    		if(1<=i%8 && i%8<=4){
+					bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.yellowchair));
+				}
+				else{
+					bu[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.yellowchair_rev));
+				}
  				checked[cnt++]=i;
  				break;
 	    	}
@@ -207,7 +261,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 	}
 	
 	
-	public void ReturnToHome(View v){
+	public void Returnprev(View v){
 		finish();
 	}
 

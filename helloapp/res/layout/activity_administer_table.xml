@@ -482,13 +482,21 @@
         </TableLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/button44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tableRow16"
+        android:layout_alignParentBottom="true"
+        android:onClick="Returnprev"
+        android:text="戻る" />
+
     <TableRow
         android:id="@+id/tableRow16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp" >
+        android:layout_above="@+id/button44"
+        android:layout_centerHorizontal="true" >
 
         <Button
             android:id="@+id/button41"
@@ -512,13 +520,12 @@
             android:text="更新" />
     </TableRow>
 
-    <Button
-        android:id="@+id/button44"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tableRow16"
-        android:layout_below="@+id/tableRow16"
-        android:onClick="ReturnToHome"
-        android:text="ホームに戻る" />
+        android:layout_above="@+id/tableRow16"
+        android:layout_alignLeft="@+id/textView1"
+        android:textSize="16sp" />
 
 </RelativeLayout>

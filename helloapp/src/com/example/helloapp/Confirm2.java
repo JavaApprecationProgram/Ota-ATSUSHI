@@ -1,14 +1,18 @@
+//Numberformat.txt、Rdatafile.txt、Ndatafile.txtのファイルの中身を全て表示する画面
+/*
+ * 「NUMBERFORMAT」ボタンを押すと、Numberformat.txtの中身全てを確認できる
+ * 
+ * 「RDATAFILE」ボタンを押すと、Rdatafile.txtの中身全てを確認できる
+ * 
+ * 「NDATAFILE」ボタンを押すと、Ndatafile.txtの中身全てを確認できる
+ * 
+ * 「RESET」ボタンを押すと、Numberformat.txt、Rdatafile.txt、Ndatafile.txtがすべて削除される
+ */
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
+import java.io.*;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,105 +31,42 @@ public class Confirm2 extends ActionBarActivity {
 		setContentView(R.layout.activity_confirm2);
 	}
 	
-	public void Reservenum(View view){
-		TextView edit1 = (TextView)this.findViewById(R.id.textView1);
+	
+	void showfile(int id,String pass) throws IOException{
+		TextView edit1 = (TextView)this.findViewById(id);
 		FileInputStream input = null;
-		try{
-			input = this.openFileInput("Reservenum.txt");
-			byte[] buffer = new byte[1000];
-			input.read(buffer);
-			String s = new String(buffer).trim();
-			edit1.setText(s);
-		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				input.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		input = this.openFileInput(pass);
+		byte[] buffer = new byte[1000];
+		input.read(buffer);
+		String s = new String(buffer).trim();
+		edit1.setText(s);
+		input.close();
 	}
 	
-	
-	public void Ndatafile(View view){
-		TextView edit1 = (TextView)this.findViewById(R.id.textView1);
-		FileInputStream input = null;
-		try{
-			input = this.openFileInput("Ndatafile.txt");
-			byte[] buffer = new byte[1000];
-			input.read(buffer);
-			String s = new String(buffer).trim();
-			edit1.setText(s);
-		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				input.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	public void Reservenum(View view) throws IOException{
+		showfile(R.id.textView1,"Reservenum.txt");
 	}
 	
-	public void Rdatafile(View view){
-		TextView edit1 = (TextView)this.findViewById(R.id.textView1);
-		FileInputStream input = null;
-		try{
-			input = this.openFileInput("Rdatafile.txt");
-			byte[] buffer = new byte[1000];
-			input.read(buffer);
-			String s = new String(buffer).trim();
-			edit1.setText(s);
-		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				input.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	public void Ndatafile(View view) throws IOException{
+		showfile(R.id.textView1,"Ndatafile.txt");
 	}
 	
+	public void Rdatafile(View view) throws IOException{
+		showfile(R.id.textView1,"Rdatafile.txt");
+	}
 	
-	public void Reset(View view){
-		try{
-			FileOutputStream fis= this.openFileOutput("Reservenum.txt", 0);
-    		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fis));
-    		out.write("");
-    		out.flush();
-    		out.close();
-    		
-    		FileOutputStream fis2= this.openFileOutput("Rdatafile.txt", 0);
-    		BufferedWriter out2 = new BufferedWriter(new OutputStreamWriter(fis2));
-    		out2.write("");
-    		out2.flush();
-    		out2.close();
-    		
-    		FileOutputStream fis3= this.openFileOutput("Ndatafile.txt", 0);
-    		BufferedWriter out3 = new BufferedWriter(new OutputStreamWriter(fis3));
-    		out3.write("");
-    		out3.flush();
-    		out3.close();
-		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	void resetfile(String pass) throws IOException{
+		FileOutputStream fis= this.openFileOutput(pass, 0);
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fis));
+		out.write("");
+		out.flush();
+		out.close();
+	}
+	
+	public void Reset(View view) throws IOException{
+		resetfile("Reservenum.txt");
+		resetfile("Ndatafile.txt");
+		resetfile("Rdatafile.txt");
 	}
 	
 	public void ReturnToHome(View v){
