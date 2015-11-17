@@ -1,9 +1,9 @@
-//Rdatafile.txtから予約情報を読み込み、各予約者の予約番号・お名前・人数をリスト形式で表示する
+//Rdatafile.txtから予約情報を読み込み、各予約者の予約番号・名前・人数をリスト形式で表示する
 /*
  * テキストエディタ「rnumedit」に予約番号を入力する
  * 「予約者使用」ボタンを押すとrnameditで入力した番号に対応する予約番号（①）の予約者を"using（使用中）"にする
- * （Rdatafile.txt・Ndatafile.txtにある①に対応する予約者情報の"person"を"using"に変える）
- * onStart()が実行され、Rdatafile.txtから予約情報を再読み込みし、各予約者の予約番号・お名前・人数をリスト形式で表示する
+ * （Rdatafile.txt①に対応する予約者情報を削除し、Ndatafile.txtにある①に対応する予約者情報の"person"を"using"に変える）
+ * onStart()が実行され、Rdatafile.txtから予約情報を再読み込みし、各予約者の予約番号・名前・人数をリスト形式で表示する
  * 
  * 「更新」ボタンを押すとonStart()が実行される
  * 
