@@ -1,5 +1,5 @@
 //予約が完了したときに出力される画面
-/*
+/**
  * Reserveform.javaから、予約番号+edittextに入力された名前・人数・電話番号をtextview1を出力する
  */
 package com.example.helloapp;
@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class ReserveComplete extends ActionBarActivity {
-
+	
+	//本プログラムのxmlファイルを開いた後、intent元から文字列を受け取って、それをtextView1に表示するメソッド
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class ReserveComplete extends ActionBarActivity {
 		return true;
 	}
 	
+	//ホームに戻るメソッド（「ホームに戻る」ボタンを押すと実行される）
 	public void ReturnHome(View v){
 		Intent intent = new Intent(this,MainActivity.class);
 		this.startActivity(intent);

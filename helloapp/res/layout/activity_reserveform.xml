@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/textView１"
-        android:onClick="ReturntoHome"
+        android:onClick="ReturntoPrev"
         android:text="戻る" />
 
     <TextView

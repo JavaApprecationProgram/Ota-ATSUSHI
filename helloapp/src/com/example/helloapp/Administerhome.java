@@ -1,4 +1,4 @@
-//管理者側のホーム（リスト画面・テーブル画面に移るボタンがある）
+//管理者側のホーム画面（リスト画面・テーブル画面に移るボタンがある）
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
@@ -19,16 +19,19 @@ public class Administerhome extends ActionBarActivity {
 		setContentView(R.layout.activity_administerhome);
 	}
 	
+	//「リスト表示」ボタンを押したときに実行される
 	public void GoToList(View v){
 		Intent i = new Intent(this,Administerlist.class);
 		this.startActivity(i);
 	}
 	
+	//「テーブル表示」ボタンを押したときに実行される
 	public void GoToTable(View v){
 		Intent i = new Intent(this,AdministerTable.class);
 		this.startActivity(i);
 	}
 	
+	//「ホームに戻る」ボタンを押したときに実行される
 	public void ReturnToHome(View v){
 		finish();
 	}

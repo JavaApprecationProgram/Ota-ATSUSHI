@@ -1,3 +1,4 @@
+//Deleteform画面で指定した予約情報が削除された場合に表示される画面
 package com.example.helloapp;
 
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +18,7 @@ public class DeleteComplete extends ActionBarActivity {
 		setContentView(R.layout.activity_delete_complete);
 	}
 	
+	//ホームに戻るメソッド（「ホームに戻る」ボタンを押すと実行される）
 	public void ReturnToHome(View v){
 		Intent i = new Intent(this,MainActivity.class);
 		this.startActivity(i);

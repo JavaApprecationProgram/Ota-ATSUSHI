@@ -1,6 +1,6 @@
 //Ndatafile.txtから予約番号・使用中番号を読み込み、予約済の番号（"person"以下にある番号）・
 //使用中の番号（"using"以下にある番号）に対応する座席を赤色にする
-/*赤色の座席は選択可
+/**赤色の座席は選択可
  * 
  * 選択した座席は黄色になる(複数選択可)
  * 
@@ -43,7 +43,8 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 	int cnt=0,num;
 
 	static Button[] bu = new Button[bid.length];
-	
+	//選択した座席番号から文字列を作って、それを返す再帰メソッド
+	//（例: 1・4・11番の座席を指定した場合・・・文字列"1|4|11|"を返す）
 	public String Sequencemake(int i){	// 3|15|11|・・・
 		if(i!=cnt-1){
 			return String.valueOf(checked[i]) + "|" + Sequencemake(i+1);
@@ -53,7 +54,14 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 			return String.valueOf(checked[i]) + "|";
 		}
 	}
-	
+	//本プログラムのxmlファイルを実行した後、座席をテーブル付近に設置するメソッド
+		/**
+		 * 各予約者情報に"person"以下に書かれている座席番号を赤にするflagを付け、その番号の座席を赤色にする
+		 * 
+		 * 座席番号が1-4、9-12、・・・の場合は、下向きの椅子の画像を付ける
+		 * 座席番号が5-9、13-16、・・・の場合は、上向きの椅子の画像を付ける
+		 * 
+		 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,6 +120,7 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 		}
 	}
 	
+	//Reserveform.javaに文字列に直した予約番号を渡し、Reserveform.javaを実行するメソッド（「予約する」ボタンを押すと実行される）
 	public void Reserve(View v){
 		Intent intent = new Intent(this,Reserveform.class);
 		if(cnt==0){
@@ -124,11 +133,17 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 	    this.startActivity(intent);
 	}
 	
+	//ホームに戻るメソッド（「ホームに戻る」ボタンを押すと実行される）
 	public void ReturntoHome(View v){
-		Intent intent = new Intent(this,MainActivity.class);
-		this.startActivity(intent);
+		finish();
 	}
 	
+	//選択した座席を黄色にするメソッド（座席を選択するたびに実行される）
+	/**
+	 *座席番号が1-4、9-12、・・・の場合は、下向きの黄色の椅子の画像を付ける
+	 * 
+	 * 座席番号が5-9、13-16、・・・の場合は、上向きの黄色の椅子の画像を付ける
+	 */	
 	public void onClick(View v){
 		int ID = v.getId();
 	    for(int i=1;i<bid.length;i++){
@@ -145,9 +160,6 @@ public class ReserveTable extends ActionBarActivity implements OnClickListener {
 		}
 	}
 	
-	public void ReturnToHome(View view){
-		finish();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

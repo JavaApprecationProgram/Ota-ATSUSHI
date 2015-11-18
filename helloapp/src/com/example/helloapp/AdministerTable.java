@@ -1,6 +1,6 @@
 //Ndatafile.txtから予約番号・使用中番号を読み込み、予約済の番号（"person"以下にある番号）に対応する座席を橙色に、
 //使用中の番号（"using"以下にある番号）に対応する座席を赤色にする
-/*
+/**
  * 橙色の座席は選択不可・赤色の座席は選択可
  * 
  * 選択した座席は黄色になる(複数選択可)
@@ -48,6 +48,10 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		
 	}
 	
+	//"person"or"using"行以下に書かれた予約番号に赤or橙にするflag・colorturnを付けるメソッド
+	/**
+	 * 各予約者情報に"person"が書かれている場合は橙に、"using"が書かれている場合は赤に、するflag・colorturnを付ける
+	 */
 	void changecolor(String line,String color){
     	if(line.indexOf("person") == -1 && line.indexOf("using") == -1){
     		num=Integer.parseInt(line);
@@ -63,6 +67,12 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		return;
 	}
 	
+	//予約番号・使用中番号に対応する座席の色を赤or橙にするメソッド
+	/**
+	 * 座席番号が1-4、9-12、・・・の場合は、下向きの椅子の画像を付ける
+	 * 
+	 * 座席番号が5-9、13-16、・・・の場合は、上向きの椅子の画像を付ける
+	 */
 	void colorpaint(int n){
     	if(colorturn==1){
     		orangeflag[num]=1;
@@ -84,6 +94,8 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
     	}
 	}
 	
+	
+	//座席をテーブル付近に配置し、予約番号・使用中番号に対応する座席の色は赤or橙にするメソッド
 	public void onStart(){
 		super.onStart();
 		for(int i=0;i<cnt;i++){
@@ -143,7 +155,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		}
 	}
 	
-	
+	//座席が選択されたかを確認するメソッド（座席が選択されていれば0、選択されていなければエラーを表示して-1を返す）
 	int selectedcheck(){
 		if(cnt==0){
 			TextView text = (TextView)this.findViewById(R.id.textView2);
@@ -154,6 +166,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		return 0;
 	}
 	
+	//選択した座席番号を"using(使用中)"として、Ndatafileに追加するメソッド(「使用する」ボタンを押すと実行される)
 	public void Use(View v) throws IOException{
 		if(selectedcheck()==-1){
 			return;
@@ -177,6 +190,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
     	builder.show();
 	}
 	
+	//選択した座席番号を、Ndatafile.txtから削除するメソッド（「空きにする」ボタンを押すと実行される）
 	public void Free(View v) throws IOException{
 		if(selectedcheck()==-1){
 			return;
@@ -196,7 +210,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
      	FileOutputStream fis4= this.openFileOutput("Ndatafile.txt", 0);
     	BufferedWriter Nwriter = new BufferedWriter(new OutputStreamWriter(fis4));
  		for(int i=0;i<dcnt;i++){
- 			if(data[i].indexOf("using") != -1 || data[i].indexOf("person") != -1){
+ 			if(data[i].indexOf("using") != -1){
  				if(data[i+2]==null){
  					break;
  				}
@@ -240,6 +254,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
     	builder.show();
 	}
 
+	//onStart()を実行して、ざせきの使用状況を更新するメソッド（「更新」ボタンを押すと実行される）
 	public void Update(View v){
 		onStart();
 	}
@@ -260,7 +275,7 @@ public class AdministerTable extends ActionBarActivity implements OnClickListene
 		}
 	}
 	
-	
+	//1つ前の画面に戻るメソッド（「戻る」ボタンを押すと実行される）
 	public void Returnprev(View v){
 		finish();
 	}

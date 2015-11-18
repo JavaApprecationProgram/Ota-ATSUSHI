@@ -1,12 +1,11 @@
 //Rdatafile.txtから予約情報を読み込み、各予約者の予約番号・名前・人数をリスト形式で表示する
-/*
+/**
  * テキストエディタ「rnumedit」に予約番号を入力する
  * 「予約者使用」ボタンを押すとrnameditで入力した番号に対応する予約番号（①）の予約者を"using（使用中）"にする
  * （Rdatafile.txt①に対応する予約者情報を削除し、Ndatafile.txtにある①に対応する予約者情報の"person"を"using"に変える）
  * onStart()が実行され、Rdatafile.txtから予約情報を再読み込みし、各予約者の予約番号・名前・人数をリスト形式で表示する
  * 
  * 「更新」ボタンを押すとonStart()が実行される
- * 
  * 
  */
 
@@ -35,7 +34,7 @@ public class Administerlist extends ActionBarActivity {
 		setContentView(R.layout.activity_administerlist);
 	}
 	
-	
+	//Rdatafile.txtから予約情報を読み込み、各予約者の予約番号・名前・人数をリスト形式で表示するメソッド
 	public void onStart(){
 		super.onStart();
 		TextView rview = (TextView)this.findViewById(R.id.rnumtext);
@@ -64,6 +63,7 @@ public class Administerlist extends ActionBarActivity {
     	}
 	}
 	
+	//edittext"rnumedit"に数字が入力されているか確認するメソッド（数字が入力されている場合はnum、それ以外はエラーを表示して-1を返す」）
 	int filedcheck(){
 		try{
 			int num;
@@ -79,12 +79,23 @@ public class Administerlist extends ActionBarActivity {
 		
 		catch(NullPointerException e){
 			TextView text = (TextView)this.findViewById(R.id.textView5);
-		    text.setText("予約情報を全て入力してください");
+		    text.setText("予約番号を入力してください");
+		    text.setTextColor(android.graphics.Color.RED);
+		    return -1;
+		}
+		
+		catch(NumberFormatException e){
+			TextView text = (TextView)this.findViewById(R.id.textView5);
+		    text.setText("予約番号は数字にしてください");
 		    text.setTextColor(android.graphics.Color.RED);
 		    return -1;
 		}
 	}
 	
+	// rnameditで入力した番号に対応する予約番号（①）の予約者を"using（使用中）"に書き換えるメソッド
+	/**
+	 * （Rdatafile.txt①に対応する予約者情報を削除し、Ndatafile.txtにある①に対応する予約者情報の"person"を"using"に変える）
+	*/
 	int fileupdate(String path,int rn,int Rdataflag) throws IOException{
 		String linedata;
 		String[] data = new String[1000];
@@ -131,7 +142,7 @@ public class Administerlist extends ActionBarActivity {
 		return flag;
 	}
 	
-	
+	// rnameditで入力した番号に対応する予約番号（①）の予約者を"using（使用中）"にするメソッド（「予約者使用」ボタンを押したときに実行される）
 	public void UseTable(View v) throws IOException{
 		int num;
 		if((num=filedcheck())!=-1){
@@ -160,12 +171,12 @@ public class Administerlist extends ActionBarActivity {
 		return;
 	}
 	
-	
+	//「更新」ボタンを押したときに実行される
 	public void Update(View v){
 		onStart();
 	}
 	
-	
+	//（「戻る」ボタンを押したときに実行される）
 	public void ReturnToPrev(View v){
 		finish();
 	}

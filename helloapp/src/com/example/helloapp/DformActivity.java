@@ -1,5 +1,5 @@
 //予約情報を取り消す画面
-/*edittextに予約番号・名前を入力する
+/**edittextに予約番号・名前を入力する
  * 
  * 「決定する」ボタンを押すと、入力された予約番号・名前が一致するRdatafile.txt内の予約情報を取り消し、予約番号が一致するNdatafile.txt内の予約情報を取り消す
  * 
@@ -29,7 +29,8 @@ public class DformActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_dform);
 	}
 	
-	
+	//sで指定した文字列が数字であるかを確認するメソッド
+	//（数字でなければエラーを表示する）
 	public int numcheck(String s,String text, int redId){
 		try{
 	    	return Integer.parseInt(s);
@@ -45,6 +46,8 @@ public class DformActivity extends ActionBarActivity {
 	    }
 	}
 	
+	//予約情報が書き込まれたかを確かめるメソッド
+	//（書き込まれていなければ、エラーを表示する）
 	public String editfilledcheck(int editID){
 		try{
 			EditText edit = (EditText)this.findViewById(editID);
@@ -67,9 +70,9 @@ public class DformActivity extends ActionBarActivity {
 		}
 	}
 	
-	
+	//予約情報を取り消すメソッド（「削除する」ボタンを押すと実行される）
 	public void DeleteReserve(View view) throws IOException{
- 		//一行ずつ読み込んでいく
+		
  		String linedata;
  		String data1[] = new String[100];
  		String data2[] = new String[100];
@@ -85,7 +88,7 @@ public class DformActivity extends ActionBarActivity {
 	    if(rnum==-1){
 	        return;
 	    }
-	    //読み込み
+	    
 	    FileInputStream fis2 = this.openFileInput("Rdatafile.txt");
 	    BufferedReader Rreader = new BufferedReader(new InputStreamReader(fis2));
 		FileInputStream fis = this.openFileInput("Ndatafile.txt");
@@ -99,7 +102,6 @@ public class DformActivity extends ActionBarActivity {
 
  		FileOutputStream fis3= this.openFileOutput("Rdatafile.txt", 0);
     	BufferedWriter Rwriter = new BufferedWriter(new OutputStreamWriter(fis3));
-    	//名前が同じでも、予約番号が違う場合はエラーを起こすようにする
  		for(int i=0;i<dcnt;i++){
  			if(data1[i].indexOf("person") != -1 && Integer.parseInt(data1[i+1])==rnum && data1[i+2].indexOf(rnametext) != -1){
  				i+=3;
@@ -170,6 +172,7 @@ public class DformActivity extends ActionBarActivity {
      	this.startActivity(i);
 	}
 	
+	//1つ前に戻るメソッド（「戻る」ボタンを押すと実行される）
 	public void ReturnToHome(View view){
 		finish();
 	}

@@ -1,5 +1,8 @@
 //予約情報を入力する画面
-/*edittextに名前・人数・電話番号を入力する
+/**はじめに、onCreateメソッドでintent元から受け取った座席番号を文字列に直したものを、int型の配列に直す
+ * （例: intent元から受け取った文字列"1|10|15|22"→int型の配列cnum={1,10,15,22}にする）
+ * 
+ * edittextに名前・人数・電話番号を入力する
  * 
  * 「決定する」ボタンを押すと、Reservenum.txtから予約番号を呼び出し、インクリメントした予約番号（①）をReservenum.txtに書き込む。
  * 次に、①+入力された名前・人数・電話番号をRdatafile.txtに書き込み、①+指定した座席番号をRdatafile.txtに書き込む。
@@ -33,6 +36,7 @@ public class Reserveform extends ActionBarActivity {
 	String name,number,address;
 
 
+	//本プログラムのxmlファイルを開くとともに、intent元から受け取った座席番号を文字列に直したものをint型の配列に直すメソッド
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,6 +66,8 @@ public class Reserveform extends ActionBarActivity {
 		return true;
 	}
 	
+	//sで指定した文字列が数字であるかを確認するメソッド
+	//（数字でなければエラーを表示する）
 	public int numcheck(String s,String text, int redId){
 		try{
 	    	return Integer.parseInt(s);
@@ -77,12 +83,8 @@ public class Reserveform extends ActionBarActivity {
 	    }
 	} 
 	
-	public void mkdir(String p) throws IOException{
-		String new_file_path = "/data/data/"+this.getPackageName()+"/files/"+p;
-        File newfile = new File(new_file_path);
-        newfile.createNewFile();
-	}
 	
+	//Reservenum.txtに、現在の予約番号を上書きするメソッド
 	public void addRnum(int n) throws IOException{
 		FileOutputStream fis1 = this.openFileOutput(path, 0);
 		BufferedWriter out1 = new BufferedWriter(new OutputStreamWriter(fis1));
@@ -90,6 +92,8 @@ public class Reserveform extends ActionBarActivity {
 		out1.close();
 	}
 	
+	//予約情報が書き込まれたかを確かめるメソッド
+	//（書き込まれていなければ、エラーを表示する
 	public String editfilledcheck(int editID){
 		try{
 			EditText edit = (EditText)this.findViewById(editID);
@@ -112,6 +116,15 @@ public class Reserveform extends ActionBarActivity {
 		}
 	}
 	
+	//予約情報を書き込むメソッド（「予約する」ボタンを押すと実行される）
+	/**「予約する」ボタンを押した時の操作
+	 * まず、Reservenum.txtに入っている予約番号をインクリメントし、それをReservenum.txtに上書きする（インクリメントした予約番号を①とする）
+	 * 
+	 * 次に、NDdatafile.txtに①+選択した座席番号を書き込む
+	 * 
+	 * そして、Rdatafile.txtに①+名前+人数+電話番号を書き込む
+	 * 
+	 */
 	public void doAction(View v) throws IOException{
     	int num = 0;
     	name=editfilledcheck(R.id.rnumedit);
@@ -135,13 +148,6 @@ public class Reserveform extends ActionBarActivity {
 			addRnum(num);
 	    }
 	    
-	    catch(FileNotFoundException e){
-			mkdir(path);
-            mkdir(path2);
-            mkdir(path3);
-            num=1;
-    		addRnum(num);
-	    }
 	    
 	    catch (NumberFormatException e2){
 			num=1;
@@ -170,9 +176,9 @@ public class Reserveform extends ActionBarActivity {
         
 	}
 	
-	public void ReturntoHome(View v){
-		Intent intent = new Intent(this,MainActivity.class);
-		this.startActivity(intent);
+	//1つ前の画面に戻るメソッド（「戻る」ボタンを押すと実行される）
+	public void ReturntoPrev(View v){
+		finish();
 	}
 
 	@Override
